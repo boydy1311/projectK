@@ -1,0 +1,25 @@
+{
+  "extends": "ess",
+  "parser": "babel-eslint",
+  "root": true,
+  "globals": {
+    "__DEV__": true,
+    "jasmine": true,
+    "spyOn": true,
+    "it": true,
+    "xit": true,
+    "describe": true,
+    "xdescribe": true,
+    "expect": true,
+    "done": true,
+    "by": true,
+    "protractor": true,
+    "$": true,
+    "element": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "beforeAll": true,
+    "afterAll": true,
+    "browser": true
+    }
+}
