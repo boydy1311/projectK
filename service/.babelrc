@@ -2,11 +2,11 @@
   "presets": [ "es2015", "stage-0"],
   "env": {
     "test": {
-      "plugins": [ "rewire", ["module-alias"], [
+      "plugins": [ "rewire", ["module-alias", [
         {
           "source": "./source", "expose": "source"
         }
-        ]]
+        ]]]
     }
   }
 }

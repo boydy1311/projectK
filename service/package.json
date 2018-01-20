@@ -6,7 +6,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "build": "npm run clean && babel -d ./lib ./source -s",
+    "build": "rimraf ./lib/ && babel ./source --out-dir ./lib --copy-files",
     "clean": "rm -rf lib && mkdir lib",
     "lint": "eslint .",
     "start": "node ./lib/server/server.js",

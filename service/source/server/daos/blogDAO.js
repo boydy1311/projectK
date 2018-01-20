@@ -2,6 +2,7 @@
 
 // A method which will return a specific blog post
 const getOneBlog = (blogModel, query) => new Promise((resolve, reject) => {
+  console.log(query);
   blogModel.findOne(query, (err, blog) => {
     if (err) {
       reject(err);
@@ -12,7 +13,7 @@ const getOneBlog = (blogModel, query) => new Promise((resolve, reject) => {
 
 // A method which will return blog posts that match a criteria
 const getManyBlogs = (blogModel) => new Promise((resolve, reject) => {
-  blogModel.findAll((err, blogs) => {
+  blogModel.find((err, blogs) => {
     if (err) {
       reject(err);
     }
@@ -31,13 +32,29 @@ const insertBlog = (blogModel, body) => new Promise((resolve, reject) => {
 });
 
 // A method which will delete a blog post from MongoDb
-const deleteBlog = (blogModel, req) => new Promise((resolve, reject) => {
-  //TODO
+const deleteBlog = (blogModel, searchQuery) => new Promise((resolve, reject) => {
+  blogModel.destroyAll(searchQuery, (err, result) => {
+    if (err) {
+      reject(err);
+    }
+    resolve(result);
+  })
 });
 
 // A method which will alter a blog post in MongoDb
-const updateBlog = (blogModel, req) => new Promise((resolve, reject) => {
-  //TODO
+const updateBlog = (blogModel, searchQuery, newBody) => new Promise((resolve, reject) => {
+  getOneBlog(blogModel, searchQuery)
+  .then((blog) => {
+    blog.updateAttributes(newBody, (updateErr, updatedBlog) => {
+      if (updateErr) {
+        reject(eupdateErrrr);
+      }
+      resolve(updatedBlog);
+    });
+  })
+  .catch((getErr) => {
+    reject(getErr);
+  });
 });
 
 module.exports = {
