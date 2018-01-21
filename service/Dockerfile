@@ -1,4 +1,4 @@
-# Use an official Python runtime as a parent image
+# Use an alpine based image as it is lightweight
 FROM alpine:3.6
 
 # Install npm on base alpine image
@@ -21,9 +21,6 @@ RUN npm run build
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
-
-# Define environment variable
-#ENV NAME World
 
 # Run app.py when the container launches
 CMD ["npm", "run", "start"]
