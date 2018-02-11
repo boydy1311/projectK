@@ -1,5 +1,6 @@
 import { getOneBlog, getManyBlogs, insertBlog, deleteBlog, updateBlog } from '../daos/blogDAO.js';
-import { disableCertainMethods } from '../../utils/loopbackUtils.js';
+import { disableCertainMethods } from '../utils/loopbackUtils.js';
+import { errorHandler } from '../utils/errorHandling.js';
 
 module.exports = (Blog) => {
 disableCertainMethods(Blog);
@@ -20,13 +21,21 @@ Blog.getBlogByTitle = (title, req, options, cb) => {
       title: title
     }
   };
-  console.log(`title: ${title}`);
   getOneBlog(Blog, searchQuery)
   .then((blog) => {
+    // If the blog was not found
+    if (!blog) {
+      const notFoundErr = errorHandler('Blog does not exist', 404);
+      cb(notFoundErr);
+      return;
+    }
+    // return the found blog
     cb(null, blog);
   })
   .catch((getBlogErr) => {
-    cb(getBlogErr);
+    console.log(`Error in getting blog: ${getBlogErr}`);
+    const serverErr = errorHandler('Internal Server Error', 500);
+    cb(serverErr);
   });
 }
 
@@ -66,7 +75,6 @@ Blog.remoteMethod('getAllBlogs', {
 });
 
 Blog.getAllBlogs = (req, options, cb) => {
-  console.log('werp');
   getManyBlogs(Blog)
   .then((blogs) => {
     cb(null, blogs);
