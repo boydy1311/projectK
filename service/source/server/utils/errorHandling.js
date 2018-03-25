@@ -1,4 +1,3 @@
-
 const errorHandler = (msg, statusCode) => {
   const errorObj = {};
   errorObj.message = msg;
