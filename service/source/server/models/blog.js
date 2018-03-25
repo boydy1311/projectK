@@ -1,6 +1,8 @@
-import { getOneBlog, getManyBlogs, insertBlog, deleteBlog, updateBlog } from '../daos/blogDAO.js';
+import BlogDAO from '../daos/blogDAO.js';
 import { disableCertainMethods } from '../utils/loopbackUtils.js';
 import { errorHandler } from '../utils/errorHandling.js';
+
+// const blogDAO = new BlogDAO();
 
 module.exports = (Blog) => {
 disableCertainMethods(Blog);
@@ -21,7 +23,7 @@ Blog.getBlogByTitle = (title, req, options, cb) => {
       title: title
     }
   };
-  getOneBlog(Blog, searchQuery)
+  BlogDAO.getOneBlog(Blog, searchQuery)
   .then((blog) => {
     // If the blog was not found
     if (!blog) {
@@ -56,7 +58,7 @@ const searchQuery = {
   }
 };
 console.log(`id: ${id}`);
-getOneBlog(Blog, searchQuery)
+BlogDAO.getOneBlog(Blog, searchQuery)
 .then((blog) => {
   cb(null, blog);
 })
@@ -75,7 +77,7 @@ Blog.remoteMethod('getAllBlogs', {
 });
 
 Blog.getAllBlogs = (req, options, cb) => {
-  getManyBlogs(Blog)
+  BlogDAO.getManyBlogs(Blog)
   .then((blogs) => {
     cb(null, blogs);
   })
@@ -95,7 +97,7 @@ Blog.remoteMethod('postBlog', {
 });
 
 Blog.postBlog = (req, body, options, cb) => {
-  insertBlog(Blog, body)
+  BlogDAO.insertBlog(Blog, body)
   .then((newBlog) => {
     cb(null, newBlog);
   })
@@ -119,7 +121,7 @@ Blog.deleteBlog = (req, options, cb) => {
       title: title
     }
   };
-  deleteBlog(Blog, searchQuery)
+  BlogDAO.deleteBlog(Blog, searchQuery)
   .then((deletedBlog) => {
     cb(null, deletedBlog);
   })
@@ -144,7 +146,7 @@ Blog.updateBlog = (req, body, options, cb) => {
       title: title
     }
   };
-  updateBlog(Blog, searchQuery, body)
+  BlogDAO.updateBlog(Blog, searchQuery, body)
   .then((updatedBlog) => {
     cb(null, updatedBlog);
   })
